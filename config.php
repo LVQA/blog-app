@@ -1,7 +1,7 @@
 <?php 
 	session_start();
 
-	$conn = mysqli_connect("localhost", "root", "", "blog-app");
+	$conn = mysqli_connect("localhost", "root", "", "blog-app") ;
 
 	if (!$conn) {
 		die("Error connecting to database: " . mysqli_connect_error());

@@ -39,8 +39,8 @@
 			$password = md5($password_1);//encrypt the password before saving in the database
 			$query = "INSERT INTO users (username, email, password, created_at, updated_at) 
 					  VALUES('$username', '$email', '$password', now(), now())";
-			mysqli_query($conn, $query);
-
+			mysqli_query($conn, $query) or die(mysqli_error($conn));
+			
 			// get id of created user
 			$reg_user_id = mysqli_insert_id($conn); 
 
@@ -70,14 +70,14 @@
 		if (empty($username)) { array_push($errors, "Username required"); }
 		if (empty($password)) { array_push($errors, "Password required"); }
 		if (empty($errors)) {
-			$password = md5($password); // encrypt password
+			 $password = md5($password); // encrypt password
 			$sql = "SELECT * FROM users WHERE username='$username' and password='$password' LIMIT 1";
 
-			$result = mysqli_query($conn, $sql);
+			$result = mysqli_query($conn, $sql) or die(mysqli_error($conn));
 			if (mysqli_num_rows($result) > 0) {
 				// get id of created user
-				$reg_user_id = mysqli_fetch_assoc($result)['id']; 
-
+				$reg_user_id = mysqli_fetch_assoc($result)['user_id']; 
+				
 				// put logged in user into session array
 				$_SESSION['user'] = getUserById($reg_user_id); 
 
